@@ -201,7 +201,13 @@ class FakeServer:
             values = [pos + plot / 10 for plot in range(self.options.studyPlots)]
             rows.append({"i": pos - state["firstPosition"], "v": [self.bar_time(pos), *values]})
         ns_fn = self.options.studyNs
-        ns = ns_fn(study_type) if callable(ns_fn) else None
+        if callable(ns_fn):
+            try:
+                ns = ns_fn(study_type)
+            except TypeError:
+                ns = ns_fn()
+        else:
+            ns = None
         return {
             "m": "du",
             "p": [

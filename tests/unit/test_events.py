@@ -65,7 +65,7 @@ class TestEventsSuite:
         assert "async any" in messages
 
     def test_isolates_throwing_listeners_from_the_emitter(self, monkeypatch):
-        emitter = TestEmitter()
+        emitter = _DummyEmitter()
         after = MagicMock()
         logged: list[tuple] = []
         monkeypatch.setattr("tradingview.events._log_error", lambda *args: logged.append(args))
