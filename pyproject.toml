@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "tradingview"
-version = "4.0.0"
+version = "4.0.1"
 description = "TradingView market data for Python: candles, quotes, indicators and strategies, with a simple data API and full low-level access (Python port of @mathieuc/tradingview)."
 readme = "README.md"
 license = "ISC"
