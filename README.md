@@ -5,7 +5,7 @@ Python 1:1 port of [`@mathieuc/tradingview`](https://github.com/Mathieu2301/Trad
 ## Features
 
 - **High-Level Data API (`tradingview.data` / `tradingview`)**:
-  - `get_candles` / `getCandles`, `watch_candles` / `watchCandles` (including deep history pagination and custom chart types: HeikinAshi, Renko, LineBreak, Kagi, PointAndFigure, Range)
+  - `get_candles` / `getCandles`, `watch_candles` / `watchCandles` (including deep history pagination, custom chart types: HeikinAshi, Renko, LineBreak, Kagi, PointAndFigure, Range, and futures settlement close via `use_settlement_as_close` / `useSettlementAsClose`)
   - `get_quote` / `getQuote`, `get_quotes` / `getQuotes`, `watch_quotes` / `watchQuotes`
   - `get_indicator_data` / `getIndicatorData`, `watch_indicator` / `watchIndicator` (built-in studies, Pine Script indicators, drawings/graphics, and strategy backtest reports)
   - `get_symbol_info` / `getSymbolInfo`

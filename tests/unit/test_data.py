@@ -173,6 +173,43 @@ async def test_get_candles_passes_chart_options():
 
 
 @pytest.mark.asyncio
+async def test_get_candles_propagates_use_settlement_as_close():
+    server_snake, opts_snake = fake()
+    await getCandles(
+        {
+            "symbol": "CME_MINI:ES1!",
+            "timeframe": "1D",
+            "count": 10,
+            "use_settlement_as_close": True,
+            "clientOptions": opts_snake,
+        }
+    )
+    payload_snake = json.loads(server_snake.last.packets("resolve_symbol")[0]["p"][2][1:])
+    assert payload_snake == {
+        "symbol": "CME_MINI:ES1!",
+        "adjustment": "splits",
+        "settlement-as-close": True,
+    }
+
+    server_camel, opts_camel = fake()
+    await getCandles(
+        {
+            "symbol": "CME_MINI:ES1!",
+            "timeframe": "1D",
+            "count": 10,
+            "useSettlementAsClose": True,
+            "clientOptions": opts_camel,
+        }
+    )
+    payload_camel = json.loads(server_camel.last.packets("resolve_symbol")[0]["p"][2][1:])
+    assert payload_camel == {
+        "symbol": "CME_MINI:ES1!",
+        "adjustment": "splits",
+        "settlement-as-close": True,
+    }
+
+
+@pytest.mark.asyncio
 async def test_get_candles_rejects_invalid_queries_before_connecting():
     server, client_options = fake()
     with pytest.raises(Exception) as e1:

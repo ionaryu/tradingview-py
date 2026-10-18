@@ -118,6 +118,8 @@ class ChartSession(Emitter):
             symbol_init["session"] = opts["session"]
         if opts.get("currency"):
             symbol_init["currency-id"] = opts["currency"]
+        if opts.get("useSettlementAsClose") or opts.get("use_settlement_as_close"):
+            symbol_init["settlement-as-close"] = True
 
         replay_ts = opts.get("replay")
         if replay_ts is not None:

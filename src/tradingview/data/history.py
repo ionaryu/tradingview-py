@@ -54,6 +54,11 @@ def plan_history(query: dict[str, Any]) -> HistoryPlan:
         if "backAdjustment" in query
         else query.get("back_adjustment")
     )
+    use_settlement = (
+        query.get("useSettlementAsClose")
+        if "useSettlementAsClose" in query
+        else query.get("use_settlement_as_close")
+    )
 
     return AttrDict(
         {
@@ -74,6 +79,7 @@ def plan_history(query: dict[str, Any]) -> HistoryPlan:
                     "session": query.get("session"),
                     "adjustment": query.get("adjustment"),
                     "backAdjustment": back_adj,
+                    "useSettlementAsClose": use_settlement,
                 }
             ),
         }

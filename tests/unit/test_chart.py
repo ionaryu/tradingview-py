@@ -100,6 +100,32 @@ async def test_chart_session_encodes_market_options_custom_chart_types_and_range
 
 
 @pytest.mark.asyncio
+async def test_chart_session_encodes_settlement_as_close_option():
+    _, client, connection = await setup()
+    chart = client.createChart()
+
+    chart.setMarket("CME_MINI:ES1!", {"timeframe": "1D"})
+    chart.setMarket("CME_MINI:ES1!", {"timeframe": "1D", "use_settlement_as_close": False})
+    chart.setMarket("CME_MINI:ES1!", {"timeframe": "1D", "use_settlement_as_close": True})
+    chart.setMarket("CME_MINI:ES1!", {"timeframe": "1D", "useSettlementAsClose": True})
+
+    packets = [json.loads(p["p"][2][1:]) for p in connection.packets("resolve_symbol")]
+    assert "settlement-as-close" not in packets[0]
+    assert "settlement-as-close" not in packets[1]
+    assert packets[2] == {
+        "symbol": "CME_MINI:ES1!",
+        "adjustment": "splits",
+        "settlement-as-close": True,
+    }
+    assert packets[3] == {
+        "symbol": "CME_MINI:ES1!",
+        "adjustment": "splits",
+        "settlement-as-close": True,
+    }
+    await client.close()
+
+
+@pytest.mark.asyncio
 async def test_chart_session_modifies_series_on_later_calls():
     _, client, connection = await setup()
     chart = client.createChart()
