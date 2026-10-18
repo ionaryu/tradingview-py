@@ -31,7 +31,13 @@ class AbortSignal:
     def reason(self) -> Any:
         return self._reason
 
-    def add_event_listener(self, event: str, listener: Callable[[], Any], options: dict[str, Any] | None = None) -> None:
+    def add_event_listener(
+        self,
+        event: str,
+        listener: Callable[[], Any],
+        options: dict[str, Any] | None = None,
+        **kwargs: Any,
+    ) -> None:
         if event != "abort":
             return
         if self._aborted:
